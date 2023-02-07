@@ -1,15 +1,17 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, Text, TouchableOpacity } from 'react-native';
+/* eslint-disable prettier/prettier */
+
+import { Categories, InitialSelection, ProductDetail, Products } from '../screens/index';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 import { THEME } from '../constants/theme';
-import { Categories, ProductDetail, Products } from '../screens/index';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
 const ShopNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Categories"
+      initialRouteName="InitialSelection"
       screenOptions={{
         headerStyle: {
           backgroundColor: THEME.colors.white,
@@ -23,11 +25,18 @@ const ShopNavigator = () => {
         },
       }}>
       <Stack.Screen
-        name="Categories"
-        component={Categories}
+        name="InitialSelection"
+        component={InitialSelection}
         options={{
           headerShown: false,
         }}
+      />
+      <Stack.Screen
+        name="Categories"
+        component={Categories}
+        options={({ route }) => ({
+          title: route.params.title,
+        })}
       />
       <Stack.Screen
         name="Products"

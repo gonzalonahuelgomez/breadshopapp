@@ -1,28 +1,31 @@
-import React from 'react';
-import { View, FlatList, SafeAreaView } from 'react-native';
+/* eslint-disable prettier/prettier */
 
-import { styles } from './styles';
-import { CategoryItem } from '../../components';
+import { FlatList, SafeAreaView, View } from 'react-native';
+
 import { CATEGORIES } from '../../constants/data/index';
-import { THEME } from '../../constants/theme';
+import { CategoryItem } from '../../components';
+import React from 'react';
+import { styles } from './styles';
 
-const Categories = ({ navigation }) => {
+const Categories = ({ navigation, route }) => {
+  const { itemId } = route.params;
   const onSelected = (item) => {
     navigation.navigate('Products', {
       categoryId: item.id,
       title: item.title,
     });
   };
+  const filteredProducts = CATEGORIES.filter((product) => product.itemId === itemId);
+
   const renderItem = ({ item }) => <CategoryItem item={item} onSelected={onSelected} />;
   const keyExtractor = (item) => item.id.toString();
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={CATEGORIES}
+        data={filteredProducts}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        style={styles.containerList}
-        contentContainerStyle={styles.contentContainerList}
+        style={styles.contentList}
       />
     </SafeAreaView>
   );

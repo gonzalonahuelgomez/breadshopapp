@@ -1,15 +1,13 @@
-import React from 'react';
-import { View, Text, Button, SafeAreaView, FlatList } from 'react-native';
+import { Button, FlatList, SafeAreaView, Text, View } from 'react-native';
 
-import { styles } from './styles';
-import { ProductItem } from '../../components';
 import { PRODUCTS } from '../../constants/data/index';
+import { ProductItem } from '../../components';
+import React from 'react';
 import { THEME } from '../../constants/theme';
+import { styles } from './styles';
 
 const Products = ({ navigation, route }) => {
-  const { categoryId, title } = route.params;
-
-  console.warn(title, categoryId);
+  const { categoryId } = route.params;
 
   const filteredProducts = PRODUCTS.filter((product) => product.categoryId === categoryId);
 
@@ -22,16 +20,22 @@ const Products = ({ navigation, route }) => {
 
   const renderItem = ({ item }) => <ProductItem item={item} onSelected={onSelected} />;
   const keyExtractor = (item) => item.id.toString();
-  return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={filteredProducts}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        style={styles.contentList}
-      />
-    </SafeAreaView>
-  );
+  if(filteredProducts.length > 0)
+    return (
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={filteredProducts}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          style={styles.contentList}
+        />
+      </SafeAreaView>
+    );
+  return (    
+      <View style={styles.contNoStock}>
+        <Text style={styles.titleNoStock}>No hay stock del producto</Text>
+      </View>    
+    )
 };
 
 export default Products;

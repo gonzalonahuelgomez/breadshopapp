@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
-import { styles } from './styles';
 import { PRODUCTS } from '../../constants/data';
+import React from 'react';
+import { styles } from './styles';
 
 const ProductDetail = ({ navigation, route }) => {
-  const { productId, title } = route.params;
+  const { productId } = route.params;
 
   const product = PRODUCTS.find((product) => product.id === productId);
 
